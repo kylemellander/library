@@ -25,4 +25,8 @@ class Patron
   define_method(:==) do |other|
     name() == other.name()
   end
+
+  define_method(:delete) do
+    DB.exec("DELETE FROM patrons * WHERE id = #{id}")
+  end
 end
