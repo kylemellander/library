@@ -25,4 +25,8 @@ class Book
   define_method(:==) do |other|
     title == other.title
   end
+
+  define_method(:delete) do
+    DB.exec("DELETE FROM books * WHERE id = #{id}")
+  end
 end

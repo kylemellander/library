@@ -20,5 +20,13 @@ describe(Book) do
     end
   end
 
-  describe('#==')
+  describe('#delete') do
+    it 'removes a Book from the database' do
+      @book1.save
+      @book2.save
+      @book1.delete
+      expect(Book.all).to eq [@book2]
+    end
+  end
+  
 end
