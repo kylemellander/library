@@ -51,7 +51,7 @@ class Book
     returned_authors_books.each do |author_book|
       author_id = author_book.fetch('author_id').to_i
       name = Author.find(author_id).name
-      authors.push(Author.new({name: name, id: id}))
+      authors.push(Author.new({name: name, id: author_id}))
     end
     authors
   end

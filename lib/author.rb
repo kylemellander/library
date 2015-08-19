@@ -39,6 +39,20 @@ class Author
   define_method(:update) do |attributes|
     @name = attributes.fetch(:name, @name)
     DB.exec("UPDATE authors SET name = '#{name}' WHERE id = #{id};")
+
+    attributes.fetch(:book_ids, []).each do |book_id|
+      DB.exec("INSERT INTO authors_books (author_id, book_id) VALUES (#{id}, #{book_id});")
+    end
   end
 
+  define_method(:books) do
+    books = []
+    returned_authors_books = DB.exec("SELECT * FROM authors_books WHERE author_id = #{id};")
+    returned_authors_books.each do |authors_books|
+      book_id = authors_books.fetch('book_id').to_i
+      title = Book.find(book_id).title
+      books.push(Book.new({title: title, id: book_id}))
+    end
+    books
+  end
 end
