@@ -55,4 +55,13 @@ describe(Patron) do
     end
   end
 
+  describe("#status") do
+    it "returns array of books currently checked out by patron" do
+      @patron1.save
+      @book1.save
+      @book2.save
+      @patron1.update({book_ids: [@book1.id]})
+      expect(@patron1.status()).to eq [@book1]
+    end
+  end
 end

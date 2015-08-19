@@ -56,4 +56,15 @@ class Patron
     end
   end
 
+  define_method(:status) do
+    current_books = []
+    returned_checkouts = DB.exec("SELECT * FROM checkouts WHERE patron_id = #{id} AND returned_date IS NULL;")
+    returned_checkouts.each do |checkout|
+      book_id = checkout.fetch("book_id").to_i
+      title = Book.find(book_id).title
+      current_books.push(Book.new({title: title, id: book_id}))
+    end
+    current_books
+  end
+
 end
