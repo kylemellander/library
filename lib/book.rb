@@ -87,4 +87,11 @@ class Book
     last_patron if checked_out?
   end
 
+  define_method(:return) do
+    if checked_out?
+      patron_id = current_patron.id
+      DB.exec("UPDATE checkouts SET returned_date = '#{Time.new.strftime('%Y/%m/%d')}' WHERE patron_id = #{patron_id} AND book_id = #{id};")
+    end
+  end
+
 end

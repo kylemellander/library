@@ -116,8 +116,18 @@ describe(Book) do
     end
 
     it "returns false if book is NOT checked out" do
-    @book1.save
-    expect(@book1.checked_out?).to eq false
+      @book1.save
+      expect(@book1.checked_out?).to eq false
+    end
+  end
+
+  describe("#return") do
+    it "returns a book and sets date for returned_date in DB" do
+      @book1.save
+      @patron1.save
+      @book1.update({patron_ids: [@patron1.id]})
+      @book1.return
+      expect(@book1.checked_out?).to eq false
     end
   end
 
