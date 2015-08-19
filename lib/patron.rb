@@ -36,4 +36,9 @@ class Patron
     end
   end
 
+  define_method(:update) do |attributes|
+    @name = attributes.fetch(:name, @name)
+    DB.exec("UPDATE patrons SET name = '#{@name}' WHERE id = #{id};")
+  end
+
 end

@@ -36,4 +36,13 @@ describe(Author) do
       expect(Author.find(@author1.id)).to(eq(@author1))
     end
   end
+
+  describe("update") do
+    it('updates the name of the author in the database') do
+      @author1.save
+      @author1.update({name: 'David Patron'})
+      expect(@author1.name).to eq 'David Patron'
+    end
+  end
+  
 end

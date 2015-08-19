@@ -36,4 +36,12 @@ describe(Patron) do
       expect(Patron.find(@patron1.id)).to(eq(@patron1))
     end
   end
+
+  describe("#update") do
+    it "updates the name of a patron" do
+      @patron1.save
+      @patron1.update({name: "Kyle"})
+      expect(@patron1.name()).to eq "Kyle"
+    end
+  end
 end
