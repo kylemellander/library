@@ -29,4 +29,11 @@ class Patron
   define_method(:delete) do
     DB.exec("DELETE FROM patrons * WHERE id = #{id}")
   end
+
+  define_singleton_method(:find) do |id|
+    Patron.all.each do |patron|
+      return patron if patron.id == id
+    end
+  end
+
 end

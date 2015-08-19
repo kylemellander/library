@@ -28,4 +28,12 @@ describe(Patron) do
       expect(Patron.all()).to(eq([@patron2]))
     end
   end
+
+  describe(".find") do
+    it("retrieves a Patron from the database") do
+      @patron1.save
+      @patron2.save
+      expect(Patron.find(@patron1.id)).to(eq(@patron1))
+    end
+  end
 end
