@@ -35,5 +35,10 @@ class Book
       return book if book.id == id
     end
   end
-  
+
+  define_method(:update) do |attributes|
+    @title = attributes.fetch(:title, @title)
+    DB.exec("UPDATE books SET title = '#{title}' WHERE id = #{id};")
+  end
+
 end

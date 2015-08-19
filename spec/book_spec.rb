@@ -37,4 +37,12 @@ describe(Book) do
     end
   end
 
+  describe("#update") do
+    it "updates the title of a book" do
+      @book1.save
+      @book1.update({title: "The Heart of Darkness"})
+      expect(@book1.title()).to eq "The Heart of Darkness"
+    end
+  end
+
 end
