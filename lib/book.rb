@@ -8,13 +8,22 @@ class Book
 
   define_singleton_method(:all) do
     books = []
-    returned_books = DB.exec("SELECT * FROM books;")
+    returned_books = DB.exec("SELECT * FROM books ORDER BY title;")
     returned_books.each do |book|
       id = book.fetch('id').to_i
       title = book.fetch('title')
       books.push(Book.new({id: id, title: title}))
     end
     books
+  end
+
+  define_singleton_method(:all_available) do
+    available_books = []
+    books = Book.all
+    books.each do |book|
+      available_books.push(book) if !book.checked_out?
+    end
+    available_books
   end
 
   define_method(:save) do

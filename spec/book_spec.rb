@@ -131,4 +131,14 @@ describe(Book) do
     end
   end
 
+  describe('.all_available') do
+    it "returns an array of all available books" do
+      @book1.save
+      @book2.save
+      @patron1.save
+      @book1.update({patron_ids: [@patron1.id]})
+      expect(Book.all_available).to eq [@book2]
+    end
+  end
+
 end
