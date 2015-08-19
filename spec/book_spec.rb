@@ -28,5 +28,13 @@ describe(Book) do
       expect(Book.all).to eq [@book2]
     end
   end
-  
+
+  describe('.find') do
+    it 'finds a specific book by id' do
+      @book1.save
+      @book2.save
+      expect(Book.find(@book1.id)).to eq @book1
+    end
+  end
+
 end

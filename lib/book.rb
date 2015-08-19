@@ -29,4 +29,11 @@ class Book
   define_method(:delete) do
     DB.exec("DELETE FROM books * WHERE id = #{id}")
   end
+
+  define_singleton_method(:find) do |id|
+    Book.all.each do |book|
+      return book if book.id == id
+    end
+  end
+  
 end
