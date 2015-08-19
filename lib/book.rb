@@ -51,7 +51,7 @@ class Book
 
   define_method(:patrons) do
     patrons = []
-    returned_checkouts = DB.exec("SELECT * FROM checkouts WHERE book_id = #{id};")
+    returned_checkouts = DB.exec("SELECT * FROM checkouts WHERE book_id = #{id} ORDER BY borrowed_date;")
     returned_checkouts.each do |checkout|
       patron_id = checkout.fetch('patron_id').to_i
       name = Patron.find(patron_id).name
@@ -69,6 +69,22 @@ class Book
       authors.push(Author.new({name: name, id: author_id}))
     end
     authors
+  end
+
+  define_method(:last_patron) do
+    patrons.last()
+  end
+
+  define_method(:checked_out?) do
+    returned_checkouts = DB.exec("SELECT * FROM checkouts WHERE book_id = #{id} AND returned_date IS NULL;")
+    returned_checkouts.each do |checkout|
+      return true
+    end
+    false
+  end
+
+  define_method(:current_patron) do
+    last_patron if checked_out?
   end
 
 end

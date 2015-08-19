@@ -61,6 +61,17 @@ describe(Book) do
     end
   end
 
+  describe('#current_patron') do
+    it "returns the patron who currently has the book" do
+      @book1.save
+      @book2.save
+      @patron1.save
+      @patron2.save
+      @patron2.update({book_ids: [@book1.id]})
+      expect(@book1.current_patron).to eq @patron2
+    end
+  end
+
   describe("#update") do
     it "updates the title of a book" do
       @book1.save
@@ -82,6 +93,31 @@ describe(Book) do
       @patron2.save
       @book1.update({patron_ids: [@patron1.id, @patron2.id]})
       expect(@book1.patrons()).to eq [@patron1, @patron2]
+    end
+  end
+
+  describe("#last_patron") do
+    it 'returns the last patron to checkout the book' do
+      @book1.save
+      @patron1.save
+      @patron2.save
+      @book1.update({patron_ids: [@patron1.id]})
+      @book1.update({patron_ids: [@patron2.id]})
+      expect(@book1.last_patron).to eq @patron2
+    end
+  end
+
+  describe("#checked_out?") do
+    it "returns true if book is checked out" do
+    @book1.save
+    @patron1.save
+    @book1.update({patron_ids: [@patron1.id]})
+    expect(@book1.checked_out?).to eq true
+    end
+
+    it "returns false if book is NOT checked out" do
+    @book1.save
+    expect(@book1.checked_out?).to eq false
     end
   end
 
