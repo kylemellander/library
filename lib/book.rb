@@ -16,4 +16,13 @@ class Book
     end
     books
   end
+
+  define_method(:save) do
+    result = DB.exec("INSERT INTO books (title) VALUES ('#{@title}') RETURNING id;")
+    @id = result.first.fetch('id').to_i
+  end
+
+  define_method(:==) do |other|
+    title == other.title
+  end
 end
