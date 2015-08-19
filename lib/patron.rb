@@ -27,7 +27,7 @@ class Patron
   end
 
   define_method(:delete) do
-    DB.exec("DELETE FROM patrons * WHERE id = #{id}")
+    DB.exec("DELETE FROM patrons * WHERE id = #{id};")
   end
 
   define_singleton_method(:find) do |id|
@@ -36,9 +36,24 @@ class Patron
     end
   end
 
+  define_method(:books) do
+    books = []
+    returned_checkouts = DB.exec("SELECT * FROM checkouts WHERE patron_id = #{id};")
+    returned_checkouts.each do |checkout|
+      book_id = checkout.fetch('book_id').to_i
+      title = Book.find(book_id).title
+      books.push(Book.new({id: book_id, title: title}))
+    end
+    books
+  end
+
   define_method(:update) do |attributes|
     @name = attributes.fetch(:name, @name)
     DB.exec("UPDATE patrons SET name = '#{@name}' WHERE id = #{id};")
+
+    attributes.fetch(:book_ids, []).each do |book_id|
+      DB.exec("INSERT INTO checkouts (book_id, patron_id, borrowed_date) VALUES (#{book_id}, #{id}, '#{Time.now.strftime('%Y/%m/%d')}');")
+    end
   end
 
 end

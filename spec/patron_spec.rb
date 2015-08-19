@@ -5,6 +5,8 @@ describe(Patron) do
   before do
     @patron1 = Patron.new({name: 'Dave'})
     @patron2 = Patron.new({name: 'Ryan'})
+    @book1 = Book.new({title: "Heart of Darkness"})
+    @book2 = Book.new({title: "The Name of the Wind"})
   end
 
   describe(".all") do
@@ -43,5 +45,14 @@ describe(Patron) do
       @patron1.update({name: "Kyle"})
       expect(@patron1.name()).to eq "Kyle"
     end
+
+    it "creates join association for patrons and books" do
+      @patron1.save
+      @book1.save
+      @book2.save
+      @patron1.update({book_ids: [@book1.id, @book2.id]})
+      expect(@patron1.books()).to eq [@book1, @book2]
+    end
   end
+
 end
