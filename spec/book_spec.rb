@@ -7,6 +7,8 @@ describe(Book) do
     @book2 = Book.new({title: "The Name of the Wind"})
     @author1 = Author.new({name: "Joseph Conrad"})
     @author2 = Author.new({name: "David Patorn"})
+    @patron1 = Patron.new({name: 'Dave'})
+    @patron2 = Patron.new({name: 'Ryan'})
   end
 
   describe('.all') do
@@ -49,6 +51,16 @@ describe(Book) do
     end
   end
 
+  describe('#patrons') do
+    it "lists all patrons of a book" do
+      @book1.save
+      @book2.save
+      @patron1.save
+      @book1.update({patron_ids: [@patron1.id]})
+      expect(@book1.patrons).to eq [@patron1]
+    end
+  end
+
   describe("#update") do
     it "updates the title of a book" do
       @book1.save
@@ -62,6 +74,14 @@ describe(Book) do
       @author2.save
       @book1.update({author_ids: [@author1.id, @author2.id]})
       expect(@book1.authors()).to eq [@author1, @author2]
+    end
+
+    it "creates join association for books and patrons" do
+      @book1.save
+      @patron1.save
+      @patron2.save
+      @book1.update({patron_ids: [@patron1.id, @patron2.id]})
+      expect(@book1.patrons()).to eq [@patron1, @patron2]
     end
   end
 

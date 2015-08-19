@@ -43,6 +43,21 @@ class Book
     attributes.fetch(:author_ids, []).each do |author_id|
       DB.exec("INSERT INTO authors_books (author_id, book_id) VALUES (#{author_id}, #{id});")
     end
+
+    attributes.fetch(:patron_ids, []).each do |patron_id|
+      DB.exec("INSERT INTO checkouts (patron_id, book_id, borrowed_date) VALUES (#{patron_id}, #{id}, '#{Time.new.strftime('%Y/%m/%d')}');")
+    end
+  end
+
+  define_method(:patrons) do
+    patrons = []
+    returned_checkouts = DB.exec("SELECT * FROM checkouts WHERE book_id = #{id};")
+    returned_checkouts.each do |checkout|
+      patron_id = checkout.fetch('patron_id').to_i
+      name = Patron.find(patron_id).name
+      patrons.push(Patron.new({name: name, id: patron_id}))
+    end
+    patrons
   end
 
   define_method(:authors) do
