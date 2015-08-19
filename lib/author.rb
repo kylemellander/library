@@ -27,13 +27,18 @@ class Author
   end
 
   define_method(:delete) do
-    DB.exec("DELETE FROM authors * WHERE id = #{id}")
+    DB.exec("DELETE FROM authors * WHERE id = #{id};")
   end
 
   define_singleton_method(:find) do |id|
     Author.all.each do |author|
       return author if author.id == id
     end
+  end
+
+  define_method(:update) do |attributes|
+    @name = attributes.fetch(:name, @name)
+    DB.exec("UPDATE authors SET name = '#{name}' WHERE id = #{id};")
   end
 
 end
