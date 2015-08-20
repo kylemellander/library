@@ -8,7 +8,7 @@
 <form  action="/checkout/success" method="post">
   <input type="hidden" name="book_id" value="<%= @book.id %>">
   <label for="current_patron">Select a patron:</label>
-  <select name="current_patron">
+  <select name="current_patron" id="current_patron">
     <option value="">Choose a Patron</option>
     <% Patron.all.each do |patron| %>
     <option value="<%= patron.id %>"><%= patron.name %></option>

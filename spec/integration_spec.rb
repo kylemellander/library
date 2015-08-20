@@ -132,8 +132,8 @@ describe('/book/:id/checkout', {type: :feature}) do
     @book1.update({author_ids: [@author1.id]})
     @patron1 = Patron.new({name: 'David Patorn'})
     @patron1.save
-    visit("/book/#{@book1.id}")
-    select("#{@patron1.name}", from: 'patron')
+    visit("/checkout/#{@book1.id}")
+    select("#{@patron1.name}", :from => 'current_patron')
     click_button("Check This Book Out")
     expect(page).to have_content("You have checked out The Foundation.")
   end
