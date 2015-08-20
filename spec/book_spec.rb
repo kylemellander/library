@@ -141,4 +141,13 @@ describe(Book) do
     end
   end
 
+  describe('#due_date') do
+    it "returns the date a book is due" do
+      @book1.save
+      @patron1.save
+      @book1.update({patron_ids: [@patron1.id]})
+      expect(@book1.due_date).to eq "09/03/2015"
+    end
+  end
+
 end

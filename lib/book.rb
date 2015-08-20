@@ -103,4 +103,11 @@ class Book
     end
   end
 
+  define_method(:due_date) do
+    result = DB.exec("SELECT checkout_date FROM checkouts WHERE book_id = #{id} AND return_date IS NULL;")
+    checkout_date = result.first.fetch('checkout_date')
+    checkout_date = Date.parse(checkout_date) + 14
+    checkout_date.strftime('%m/%d/%Y')
+  end
+
 end
