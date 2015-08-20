@@ -1,0 +1,17 @@
+<h2><%= @author.name %></h2>
+<table class="table table-striped">
+  <tr>
+    <td>Books:</td>
+    <td>
+      <ul>
+        <% @author.books.each() do |book| %>
+          <li><a href="/book/<%= book.id %>"><%= book.title %></a></li>
+        <% end %>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><a href="/author/<%= @author.id %>/delete">Delete Author</a></td>
+  </tr>
+</table>

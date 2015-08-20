@@ -72,3 +72,9 @@ get '/book/:id' do
   @book = Book.find(book_id)
   erb(:book_detail)
 end
+
+get '/author/:id' do
+  author_id = params.fetch('id').to_i
+  @author = Author.find(author_id)
+  erb(:author_detail)
+end
