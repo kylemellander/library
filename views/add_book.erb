@@ -1,0 +1,11 @@
+<h2>Add a Book</h2>
+<% if @success_message != nil %>
+<div class="alert alert-success"><%= @success_message %></div>
+<% end %>
+
+
+<form action="/book/submit" method="post">
+  <input name="title" type="text" placeholder="Book Title">
+  <input name="author" type="text" placeholder="Book's Author">
+  <button type="submit">Add Book</button>
+</form>
