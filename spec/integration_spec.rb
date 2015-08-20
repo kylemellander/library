@@ -109,3 +109,16 @@ describe('/author/:id', {type: :feature}) do
     expect(page).to have_content("The Foundation")
   end
 end
+
+describe('/patron/:id', {type: :feature}) do
+  it 'shows an patron\'s details' do
+    @book1 = Book.new({title: "The Foundation"})
+    @book1.save
+    @patron1 = Patron.new({name: 'David Patorn'})
+    @patron1.save
+    @book1.update({patron_ids: [@patron1.id]})
+    visit("/patron/#{@patron1.id}")
+    expect(page).to have_content("The Foundation")
+    expect(page).to have_content("David Patorn")
+  end
+end

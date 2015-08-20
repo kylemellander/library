@@ -4,6 +4,7 @@ require './lib/author'
 require './lib/book'
 require './lib/patron'
 require 'pg'
+require 'pry'
 also_reload('lib/**/*.rb')
 
 DB = PG.connect({:dbname => "library"})
@@ -77,4 +78,10 @@ get '/author/:id' do
   author_id = params.fetch('id').to_i
   @author = Author.find(author_id)
   erb(:author_detail)
+end
+
+get '/patron/:id' do
+  patron_id = params.fetch('id').to_i
+  @patron = Patron.find(patron_id)
+  erb(:patron_detail)
 end

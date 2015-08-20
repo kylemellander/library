@@ -1,0 +1,29 @@
+<h2><%= @patron.name %></h2>
+<table class="table table-striped">
+  <tr>
+    <td>Books Currently Checked Out:</td>
+    <td>
+      <ul>
+        <% @patron.status.each() do |book| %>
+          <li><a href="/book/<%= book.id %>"><%= book.title %></a> - <div><a href="/book/<%= book.id %>/return">Return This Book</a></div></li>
+        <% end %>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>Book History:</td>
+    <td>
+      <ul>
+        <% @patron.books.each() do |book| %>
+          <% if !book.checked_out? %>
+          <li><a href="/book/<%= book.id %>"><%= book.title %></a></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><a href="/author/<%= @patron.id %>/delete">Delete Patron</a></td>
+  </tr>
+</table>
