@@ -1,0 +1,11 @@
+<h2>Add a Patron</h2>
+<% if @success_message != nil %>
+<div class="alert alert-success"><%= @success_message %></div>
+<% end %>
+
+
+<form action="/patron/submit" method="post">
+  <label for="name" hidden>Patron name</label>
+  <input name="name" type="text" placeholder="Name">
+  <button type="submit">Add Patron</button>
+</form>

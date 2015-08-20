@@ -18,6 +18,10 @@ get '/book/add' do
   erb(:add_book)
 end
 
+get '/patron/add' do
+  erb(:add_patron)
+end
+
 post '/book/submit' do
   title = params.fetch('title')
   author = params.fetch('author')
@@ -27,6 +31,13 @@ post '/book/submit' do
   book.update({author_ids: [author_id]})
   @success_message = "You have added #{title} by #{author}."
   erb(:add_book)
+end
+
+post '/patron/submit' do
+  name = params.fetch('name')
+  Patron.new({name: name}).save
+  @success_message = "You have added #{name} to our Patrons List."
+  erb(:add_patron)
 end
 
 get '/book/available' do
