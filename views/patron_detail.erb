@@ -5,7 +5,7 @@
     <td>
       <ul>
         <% @patron.status.each() do |book| %>
-          <li><a href="/book/<%= book.id %>"><%= book.title %></a> - <div><a href="/book/<%= book.id %>/return">Return This Book</a></div></li>
+          <li><a href="/book/<%= book.id %>"><%= book.title %></a> - Due: <%= book.due_date %> - <a href="/book/<%= book.id %>/return">Return This Book</a></li>
         <% end %>
       </ul>
     </td>

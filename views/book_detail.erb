@@ -1,4 +1,9 @@
 <h2><%= @book.title %></h2>
+<% if @success_message != nil %>
+  <div class="alert alert-success">
+    <%= @success_message %>
+  </div>
+<% end %>
 <table class="table table-striped">
   <tr>
     <td>Authors:</td>
@@ -12,10 +17,10 @@
   </tr>
   <tr>
     <td>Available:</td>
-    <td><% if @book.checked_out? %>Unavailable<% else %><a href="/checkout/<%= @book.id %>">Check this book out</a><% end %></td>
+    <td><% if @book.checked_out? %>Due back: <%= @book.due_date %><% else %><a href="/checkout/<%= @book.id %>">Check this book out</a><% end %></td>
   </tr>
   <tr>
-    <td></td>
+    <td><% if @book.checked_out? %><a href="/book/<%= @book.id %>/return">Return This Book</a><% end %></td>
     <td><a href="/book/<%= @book.id %>/delete">Delete Book</a></td>
   </tr>
 </table>

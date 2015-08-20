@@ -92,8 +92,12 @@ describe('/book/:id', {type: :feature}) do
     @book1.save
     @author1 = Author.new({name: 'David Patorn'})
     @author1.save
+    @patron1 = Patron.new({name: 'David Patorn'})
+    @patron1.save
+    @book1.update({patron_ids: [@patron1.id]})
     @book1.update({author_ids: [@author1.id]})
     visit("/book/#{@book1.id}")
+    expect(page).to have_content("Due back: #{@book1.due_date}")
     expect(page).to have_content("The Foundation")
   end
 end
@@ -119,6 +123,7 @@ describe('/patron/:id', {type: :feature}) do
     @book1.update({patron_ids: [@patron1.id]})
     visit("/patron/#{@patron1.id}")
     expect(page).to have_content("The Foundation")
+    expect(page).to have_content("Due: #{@book1.due_date}")
     expect(page).to have_content("David Patorn")
   end
 end
@@ -135,6 +140,23 @@ describe('/book/:id/checkout', {type: :feature}) do
     visit("/checkout/#{@book1.id}")
     select("#{@patron1.name}", :from => 'current_patron')
     click_button("Check This Book Out")
+    expect(page).to have_content("Due back by #{@book1.due_date}")
     expect(page).to have_content("You have checked out The Foundation.")
+  end
+end
+
+describe('/book/:id/return', {type: :feature}) do
+  it "returns a book" do
+    @book1 = Book.new({title: "The Foundation"})
+    @book1.save
+    @author1 = Author.new({name: 'David Patorn'})
+    @author1.save
+    @book1.update({author_ids: [@author1.id]})
+    @patron1 = Patron.new({name: 'David Patorn'})
+    @patron1.save
+    @book1.update({patron_ids: [@patron1.id]})
+    visit("/book/#{@book1.id}")
+    click_link("Return This Book")
+    expect(page).to have_content("David Patorn has returned The Foundation.")
   end
 end

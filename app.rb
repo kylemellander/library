@@ -106,3 +106,12 @@ post '/checkout/success' do
   @book.update({patron_ids: [@patron.id]})
   erb(:checkout_success)
 end
+
+get '/book/:id/return' do
+  book_id = params.fetch('id').to_i
+  @book = Book.find(book_id)
+  patron = @book.current_patron
+  @book.return
+  @success_message = "#{patron.name} has returned #{@book.title}."
+  erb(:book_detail)
+end
