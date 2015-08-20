@@ -1,0 +1,23 @@
+<h2>Edit Book</h2>
+
+
+<form action="/book/<%= @book.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+
+  <label for="title">Title</label>
+  <input class="form-control" type="text" name="title" value="<%= @book.title %>">
+  <br>
+
+  <label for="another_author">Select an author:</label>
+  <select name="another_author" id="another_author">
+    <option value="">Choose an author</option>
+    <% @book.other_authors.each do |author| %>
+    <option value="<%= author.id %>"><%= author.name %></option>
+    <% end %>
+  </select>
+  <h3>OR</h3>
+
+  <label for="new_author">Add a new Author</label>
+  <input type="text" name="new_author" placeholder="Name">
+  <button type="submit" class="btn btn-success">Save Changes</button>
+</form>

@@ -154,3 +154,31 @@ delete '/patron/:id' do
   @success_message = "#{name} has been removed from the system."
   erb(:index)
 end
+
+get '/book/:id/edit' do
+  book_id = params.fetch('id').to_i
+  @book = Book.find(book_id)
+  erb(:edit_book)
+end
+
+patch '/book/:id' do
+  book_id = params.fetch('id').to_i
+  @book = Book.find(book_id)
+  another_author_id = params.fetch('another_author').to_i
+  new_author_name = params.fetch('new_author')
+  title = params.fetch('title')
+  if new_author_name.sub(/\s+\Z/, "") == "" && another_author_id != 0
+    @book.update({author_ids: [another_author_id], title: title})
+  elsif new_author_name.sub(/\s+\Z/, "") != "" && another_author_id != 0
+    author = Author.new({name: new_author_name})
+    author.save
+    @book.update({author_ids: [another_author_id, author.id], title: title})
+  elsif new_author_name.sub(/\s+\Z/, "") != "" && another_author_id == 0
+    author = Author.new({name: new_author_name})
+    author.save
+    @book.update({author_ids: [author.id], title: title})
+  else
+    @book.update({title: title})
+  end
+  erb(:book_detail)
+end

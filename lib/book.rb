@@ -112,4 +112,14 @@ class Book
     checkout_date.strftime('%m/%d/%Y')
   end
 
+  define_method(:other_authors) do
+    authors = []
+    Author.all.each do |author|
+      if !authors().include?(author)
+        authors.push(author)
+      end
+    end
+    authors
+  end
+
 end
