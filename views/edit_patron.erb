@@ -1,0 +1,9 @@
+<h2>Edit Patron</h2>
+
+
+<form action="/patron/<%= @patron.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <label for="name">Name</label>
+  <input class="form-control" type="text" name="name" value="<%= @patron.name %>">
+  <button type="submit" class="btn btn-success">Save Changes</button>
+</form>

@@ -1,0 +1,9 @@
+<h2>Edit Author</h2>
+
+
+<form action="/author/<%= @author.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <label for="name">Name</label>
+  <input class="form-control" type="text" name="name" value="<%= @author.name %>">
+  <button type="submit" class="btn btn-success">Save Changes</button>
+</form>

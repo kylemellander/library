@@ -182,3 +182,31 @@ patch '/book/:id' do
   end
   erb(:book_detail)
 end
+
+get '/author/:id/edit' do
+  author_id = params.fetch('id').to_i
+  @author = Author.find(author_id)
+  erb(:edit_author)
+end
+
+patch '/author/:id' do
+  author_id = params.fetch('id').to_i
+  @author = Author.find(author_id)
+  name = params.fetch('name')
+  @author.update({name: name})
+  erb(:author_detail)
+end
+
+get '/patron/:id/edit' do
+  patron_id = params.fetch('id').to_i
+  @patron = Patron.find(patron_id)
+  erb(:edit_patron)
+end
+
+patch '/patron/:id' do
+  patron_id = params.fetch('id').to_i
+  @patron = Patron.find(patron_id)
+  name = params.fetch('name')
+  @patron.update({name: name})
+  erb(:patron_detail)
+end
