@@ -54,13 +54,13 @@ class Book
     end
 
     attributes.fetch(:patron_ids, []).each do |patron_id|
-      DB.exec("INSERT INTO checkouts (patron_id, book_id, borrowed_date) VALUES (#{patron_id}, #{id}, '#{Time.new.strftime('%Y/%m/%d')}');")
+      DB.exec("INSERT INTO checkouts (patron_id, book_id, checkout_date) VALUES (#{patron_id}, #{id}, '#{Time.new.strftime('%Y/%m/%d')}');")
     end
   end
 
   define_method(:patrons) do
     patrons = []
-    returned_checkouts = DB.exec("SELECT * FROM checkouts WHERE book_id = #{id} ORDER BY borrowed_date;")
+    returned_checkouts = DB.exec("SELECT * FROM checkouts WHERE book_id = #{id} ORDER BY checkout_date;")
     returned_checkouts.each do |checkout|
       patron_id = checkout.fetch('patron_id').to_i
       name = Patron.find(patron_id).name
@@ -85,7 +85,7 @@ class Book
   end
 
   define_method(:checked_out?) do
-    returned_checkouts = DB.exec("SELECT * FROM checkouts WHERE book_id = #{id} AND returned_date IS NULL;")
+    returned_checkouts = DB.exec("SELECT * FROM checkouts WHERE book_id = #{id} AND return_date IS NULL;")
     returned_checkouts.each do |checkout|
       return true
     end
@@ -99,7 +99,7 @@ class Book
   define_method(:return) do
     if checked_out?
       patron_id = current_patron.id
-      DB.exec("UPDATE checkouts SET returned_date = '#{Time.new.strftime('%Y/%m/%d')}' WHERE patron_id = #{patron_id} AND book_id = #{id};")
+      DB.exec("UPDATE checkouts SET return_date = '#{Time.new.strftime('%Y/%m/%d')}' WHERE patron_id = #{patron_id} AND book_id = #{id};")
     end
   end
 
