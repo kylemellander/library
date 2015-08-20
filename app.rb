@@ -14,6 +14,12 @@ get '/' do
   erb(:index)
 end
 
+get '/book/available' do
+  @page_title = 'Available '
+  @books = Book.all_available()
+  erb(:index)
+end
+
 get '/patron' do
   @patrons = Patron.all
   erb(:patron)
@@ -61,8 +67,8 @@ post '/author/submit' do
   erb(:add_author)
 end
 
-get '/book/available' do
-  @page_title = 'Available '
-  @books = Book.all_available()
-  erb(:index)
+get '/book/:id' do
+  book_id = params.fetch('id').to_i
+  @book = Book.find(book_id)
+  erb(:book_detail)
 end

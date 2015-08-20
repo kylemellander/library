@@ -14,8 +14,8 @@
   </tr>
   <% @books.each do |book|%>
     <tr<% if book.checked_out? %>class="active"<% end %>>
-      <td><%= book.title %></td>
-      <td><%= book.authors.first.name %></td>
+      <td><a href="/book/<%= book.id %>"><%= book.title %></a></td>
+      <td><a href="/author/<%= book.authors.first.id %>"><%= book.authors.first.name %></a></td>
       <td class="text-right"><% if book.checked_out?%>Checked-out<% else %>Available<% end %></td>
     </tr>
   <% end %>

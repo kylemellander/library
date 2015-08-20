@@ -85,3 +85,15 @@ describe('/author/add', {:type => :feature}) do
     expect(page).to have_content("David Patorn")
   end
 end
+
+describe('/book/:id', {type: :feature}) do
+  it 'shows a book\'s details' do
+    @book1 = Book.new({title: "The Foundation"})
+    @book1.save
+    @author1 = Author.new({name: 'David Patorn'})
+    @author1.save
+    @book1.update({author_ids: [@author1.id]})
+    visit("/book/#{@book1.id}")
+    expect(page).to have_content("The Foundation")
+  end
+end

@@ -1,0 +1,21 @@
+<h2><%= @book.title %></h2>
+<table class="table table-striped">
+  <tr>
+    <td>Authors:</td>
+    <td>
+      <ul>
+        <% @book.authors.each() do |author| %>
+          <li><a href="/author/<%= author.id %>"><%= author.name %></a></li>
+        <% end %>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>Available:</td>
+    <td><% if @book.checked_out? %>Unavailable<% else %><a href="/checkout/<%= @book.id %>">Check this book out</a><% end %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><a href="/book/<%= @book.id %>/delete">Delete Book</a></td>
+  </tr>
+</table>
