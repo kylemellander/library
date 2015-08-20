@@ -1,0 +1,22 @@
+<h2><%= @book.title %></h2>
+<ul>
+  <% @book.authors.each do |author| %>
+    <li><%= author.name %></li>
+  <% end %>
+</ul>
+
+<form  action="/checkout/success" method="post">
+  <input type="hidden" name="book_id" value="<%= @book.id %>">
+  <label for="current_patron">Select a patron:</label>
+  <select name="current_patron">
+    <option value="">Choose a Patron</option>
+    <% Patron.all.each do |patron| %>
+    <option value="<%= patron.id %>"><%= patron.name %></option>
+    <% end %>
+  </select>
+  <h3>OR</h3>
+
+  <label for="new_patron">Check out as a new Patron</label>
+  <input type="text" name="new_patron" placeholder="Name">
+  <button type="submit" class="btn btn-success">Check This Book Out</button>
+</form>

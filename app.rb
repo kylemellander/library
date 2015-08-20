@@ -85,3 +85,24 @@ get '/patron/:id' do
   @patron = Patron.find(patron_id)
   erb(:patron_detail)
 end
+
+get '/checkout/:id' do
+  book_id = params.fetch('id').to_i
+  @book = Book.find(book_id)
+  erb(:checkout)
+end
+
+post '/checkout/success' do
+  book_id = params.fetch('book_id').to_i
+  @book = Book.find(book_id)
+  new_user_name = params.fetch('new_patron')
+  if new_user_name.sub(/\s+\Z/, "") == ""
+    patron_id = params.fetch('current_patron').to_i
+    @patron = Patron.find(patron_id)
+  else
+    @patron = Patron.new({name: new_user_name})
+    @patron.save
+  end
+  @book.update({patron_ids: [@patron.id]})
+  erb(:checkout_success)
+end

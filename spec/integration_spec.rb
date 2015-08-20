@@ -122,3 +122,19 @@ describe('/patron/:id', {type: :feature}) do
     expect(page).to have_content("David Patorn")
   end
 end
+
+describe('/book/:id/checkout', {type: :feature}) do
+  it "checks out a book correctly" do
+    @book1 = Book.new({title: "The Foundation"})
+    @book1.save
+    @author1 = Author.new({name: 'David Patorn'})
+    @author1.save
+    @book1.update({author_ids: [@author1.id]})
+    @patron1 = Patron.new({name: 'David Patorn'})
+    @patron1.save
+    visit("/book/#{@book1.id}")
+    select("#{@patron1.name}", from: 'patron')
+    click_button("Check This Book Out")
+    expect(page).to have_content("You have checked out The Foundation.")
+  end
+end
