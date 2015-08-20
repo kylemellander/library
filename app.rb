@@ -130,5 +130,27 @@ delete '/book/:id' do
   book.delete
   @books = Book.all()
   @success_message = "#{title} has been removed from our collection"
-  erb(:index) 
+  erb(:index)
+end
+
+delete '/author/:id' do
+  author_id = params.fetch('id').to_i
+  author = Author.find(author_id)
+  name = author.name
+  author.delete
+  @authors = Author.all()
+  @books = Book.all()
+  @success_message = "Author #{name} has been removed from the system."
+  erb(:index)
+end
+
+delete '/patron/:id' do
+  patron_id = params.fetch('id').to_i
+  patron = Patron.find(patron_id)
+  name = patron.name
+  patron.delete
+  @patrons = Patron.all()
+  @books = Book.all()
+  @success_message = "#{name} has been removed from the system."
+  erb(:index)
 end

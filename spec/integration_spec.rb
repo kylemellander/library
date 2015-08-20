@@ -177,3 +177,35 @@ describe('/book/:id/delete', {type: :feature}) do
     expect(page).to have_no_content('David Patorn')
   end
 end
+
+describe('/patron/:id/delete', {type: :feature}) do
+  it 'deletes a patron from the database' do
+    @book1 = Book.new({title: "The Foundation"})
+    @book1.save
+    @author1 = Author.new({name: 'David Patorn'})
+    @author1.save
+    @book1.update({author_ids: [@author1.id]})
+    @patron1 = Patron.new({name: 'David Patorn'})
+    @patron1.save
+    @book1.update({patron_ids: [@patron1.id]})
+    visit("/patron/#{@patron1.id}")
+    click_button("Delete Patron")
+    expect(page).to have_content('David Patorn has been removed from the system.')
+  end
+end
+
+describe('/author/:id/delete', {type: :feature}) do
+  it 'deletes a author from the database' do
+    @book1 = Book.new({title: "The Foundation"})
+    @book1.save
+    @author1 = Author.new({name: 'David Patorn'})
+    @author1.save
+    @book1.update({author_ids: [@author1.id]})
+    @patron1 = Patron.new({name: 'David Patorn'})
+    @patron1.save
+    @book1.update({patron_ids: [@patron1.id]})
+    visit("/author/#{@author1.id}")
+    click_button("Delete Author")
+    expect(page).to have_no_content('Author David Patorn has been removed from the system.')
+  end
+end

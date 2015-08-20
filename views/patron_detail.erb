@@ -29,6 +29,11 @@
   </tr>
   <tr>
     <td></td>
-    <td><a href="/author/<%= @patron.id %>/delete">Delete Patron</a></td>
+    <td>
+      <form action="/patron/<%= @patron.id %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button class="btn btn-danger btn-sm" type="submit">Delete Patron</button>
+      </form>
+    </td>
   </tr>
 </table>

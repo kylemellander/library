@@ -12,6 +12,11 @@
   </tr>
   <tr>
     <td></td>
-    <td><a href="/author/<%= @author.id %>/delete">Delete Author</a></td>
+    <td>
+      <form action="/author/<%= @author.id %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button class="btn btn-danger btn-sm" type="submit">Delete Author</button>
+      </form>
+    </td>
   </tr>
 </table>
