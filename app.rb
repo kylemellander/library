@@ -10,6 +10,7 @@ DB = PG.connect({:dbname => "library"})
 
 get '/' do
   @books = Book.all
+  @page_title = ''
   erb(:index)
 end
 
@@ -26,4 +27,10 @@ post '/book/submit' do
   book.update({author_ids: [author_id]})
   @success_message = "You have added #{title} by #{author}."
   erb(:add_book)
+end
+
+get '/book/available' do
+  @page_title = 'Available '
+  @books = Book.all_available()
+  erb(:index)
 end
