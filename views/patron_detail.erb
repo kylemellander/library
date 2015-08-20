@@ -1,11 +1,16 @@
 <h2><%= @patron.name %></h2>
+<% if @success_message != nil %>
+  <div class="alert alert-success">
+    <%= @success_message %>
+  </div>
+<% end %>
 <table class="table table-striped">
   <tr>
     <td>Books Currently Checked Out:</td>
     <td>
       <ul>
         <% @patron.status.each() do |book| %>
-          <li><a href="/book/<%= book.id %>"><%= book.title %></a> - Due: <%= book.due_date %> - <a href="/book/<%= book.id %>/return">Return This Book</a></li>
+          <li><a href="/book/<%= book.id %>"><%= book.title %></a> - Due: <%= book.due_date %> - <a href="/book/<%= book.id %>/return?ref=patron">Return This Book</a></li>
         <% end %>
       </ul>
     </td>

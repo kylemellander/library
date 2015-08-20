@@ -1,3 +1,8 @@
+<% if @success_message != nil %>
+  <div class="alert alert-success">
+    <%= @success_message %>
+  </div>
+<% end %>
 <h3>All <%= @page_title %>Books</h3>
 <% if @books.any?() %>
 <table class="table table-hover">

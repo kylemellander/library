@@ -20,7 +20,12 @@
     <td><% if @book.checked_out? %>Due back: <%= @book.due_date %><% else %><a href="/checkout/<%= @book.id %>">Check this book out</a><% end %></td>
   </tr>
   <tr>
-    <td><% if @book.checked_out? %><a href="/book/<%= @book.id %>/return">Return This Book</a><% end %></td>
-    <td><a href="/book/<%= @book.id %>/delete">Delete Book</a></td>
+    <td><% if @book.checked_out? %><a href="/book/<%= @book.id %>/return?ref=book">Return This Book</a><% end %></td>
+    <td>
+      <form action="/book/<%= @book.id %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button class="btn btn-danger btn-sm" type="submit">Delete Book</button>
+      </form>
+    </td>
   </tr>
 </table>

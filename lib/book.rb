@@ -37,6 +37,8 @@ class Book
 
   define_method(:delete) do
     DB.exec("DELETE FROM books * WHERE id = #{id}")
+    DB.exec("DELETE FROM authors_books * WHERE book_id = #{id}")
+    DB.exec("DELETE FROM checkouts * WHERE book_id = #{id}")
   end
 
   define_singleton_method(:find) do |id|

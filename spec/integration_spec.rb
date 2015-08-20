@@ -160,3 +160,20 @@ describe('/book/:id/return', {type: :feature}) do
     expect(page).to have_content("David Patorn has returned The Foundation.")
   end
 end
+
+describe('/book/:id/delete', {type: :feature}) do
+  it 'deletes a book from the database' do
+    @book1 = Book.new({title: "The Foundation"})
+    @book1.save
+    @author1 = Author.new({name: 'David Patorn'})
+    @author1.save
+    @book1.update({author_ids: [@author1.id]})
+    @patron1 = Patron.new({name: 'David Patorn'})
+    @patron1.save
+    @book1.update({patron_ids: [@patron1.id]})
+    visit("/")
+    click_link("The Foundation")
+    click_button("Delete Book")
+    expect(page).to have_no_content('David Patorn')
+  end
+end

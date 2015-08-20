@@ -28,6 +28,7 @@ class Patron
 
   define_method(:delete) do
     DB.exec("DELETE FROM patrons * WHERE id = #{id};")
+    DB.exec("DELETE FROM checkouts * WHERE patron_id = #{id};")
   end
 
   define_singleton_method(:find) do |id|

@@ -108,10 +108,27 @@ post '/checkout/success' do
 end
 
 get '/book/:id/return' do
+  ref = params.fetch('ref')
   book_id = params.fetch('id').to_i
   @book = Book.find(book_id)
-  patron = @book.current_patron
+  @patron = @book.current_patron
   @book.return
-  @success_message = "#{patron.name} has returned #{@book.title}."
-  erb(:book_detail)
+  @success_message = "#{@patron.name} has returned #{@book.title}."
+  if ref == "book"
+    erb(:book_detail)
+  elsif ref == "patron"
+    erb(:patron_detail)
+  else
+    erb(:index)
+  end
+end
+
+delete '/book/:id' do
+  book_id = params.fetch('id').to_i
+  book = Book.find(book_id)
+  title = book.title
+  book.delete
+  @books = Book.all()
+  @success_message = "#{title} has been removed from our collection"
+  erb(:index) 
 end
