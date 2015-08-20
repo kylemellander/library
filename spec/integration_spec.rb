@@ -74,3 +74,14 @@ describe('/author', {:type => :feature}) do
     expect(page).to have_content("David Patorn")
   end
 end
+
+describe('/author/add', {:type => :feature}) do
+  it 'displays author page with authors' do
+    visit('/author/add')
+    fill_in "name", with: "David Patorn"
+    click_button "Add Author"
+    expect(page).to have_content("David Patorn")
+    visit('/author')
+    expect(page).to have_content("David Patorn")
+  end
+end
