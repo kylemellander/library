@@ -14,6 +14,16 @@ get '/' do
   erb(:index)
 end
 
+get '/patron' do
+  @patrons = Patron.all
+  erb(:patron)
+end
+
+get '/author' do
+  @authors = Author.all
+  erb(:author)
+end
+
 get '/book/add' do
   erb(:add_book)
 end
@@ -44,9 +54,4 @@ get '/book/available' do
   @page_title = 'Available '
   @books = Book.all_available()
   erb(:index)
-end
-
-get '/patron' do
-  @patrons = Patron.all
-  erb(:patron)
 end

@@ -21,5 +21,5 @@
   <% end %>
 </table>
 <% else %>
-<h3>No books have been added to the library. You can <a href="/book/add">add a book here</a>.</h3>
+<h3><% if @page_title == "" %>No books have been added to the library. You can <a href="/book/add">add a book here</a>.<% else %>No books are available.<% end %></h3>
 <% end %>

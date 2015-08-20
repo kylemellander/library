@@ -1,0 +1,21 @@
+<h3>All Authors</h3>
+<% if @authors.any?() %>
+<table class="table table-hover">
+  <tr>
+    <th width="80%">
+      Name
+    </th>
+    <th class="text-right" width="20%">
+      Link
+    </th>
+  </tr>
+  <% @authors.each do |author|%>
+    <tr>
+      <td><%= author.name %></td>
+      <td class="text-right"><a href="/author/<%= author.id %>">View Author</a></td>
+    </tr>
+  <% end %>
+</table>
+<% else %>
+<h3>No authors have been added to the library. You can <a href="/author/add">add a author here</a>.</h3>
+<% end %>

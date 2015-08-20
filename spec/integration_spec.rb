@@ -65,3 +65,12 @@ describe('/patron/add', {:type => :feature}) do
     expect(page).to have_content("David Patorn")
   end
 end
+
+describe('/author', {:type => :feature}) do
+  it 'displays all authors' do
+    @author1 = Author.new({name: 'David Patorn'})
+    @author1.save
+    visit('/author')
+    expect(page).to have_content("David Patorn")
+  end
+end
