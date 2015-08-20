@@ -1,0 +1,21 @@
+<h3>All Patrons</h3>
+<% if @patrons.any?() %>
+<table class="table table-hover">
+  <tr>
+    <th width="80%">
+      Name
+    </th>
+    <th class="text-right" width="20%">
+      Link
+    </th>
+  </tr>
+  <% @patrons.each do |patron|%>
+    <tr>
+      <td><%= patron.name %></td>
+      <td class="text-right"><a href="/patron/<%= patron.id %>">View Patron</a></td>
+    </tr>
+  <% end %>
+</table>
+<% else %>
+<h3>No patrons have been added to the library. You can <a href="/patron/add">add a patron here</a>.</h3>
+<% end %>

@@ -34,3 +34,8 @@ get '/book/available' do
   @books = Book.all_available()
   erb(:index)
 end
+
+get '/patron' do
+  @patrons = Patron.all
+  erb(:patron)
+end

@@ -45,3 +45,23 @@ describe('/book/available', {:type => :feature}) do
     expect(page).to have_no_content("Heart of Darkness")
   end
 end
+
+describe('/patron', {:type => :feature}) do
+  it 'displays all patrons' do
+    @patron1 = Patron.new({name: 'Dave'})
+    @patron1.save
+    visit('/patron')
+    expect(page).to have_content("Dave")
+  end
+end
+
+describe('/patron/add', {:type => :feature}) do
+  it 'displays patron page with patrons' do
+    visit('/patron/add')
+    fill_in "name", with: "David Patorn"
+    click_button "Add Patron"
+    expect(page).to have_content("David Patorn")
+    visit('/patron')
+    expect(page).to have_content("David Patorn")
+  end
+end
